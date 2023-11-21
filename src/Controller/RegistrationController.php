@@ -18,7 +18,11 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
+        //! création du formulaire a partir de la class User avec le RegistrationFormType::class
+
         $form->handleRequest($request);
+        //! inspercte la requette si le formulaire a été soumis il prend les infos mis dans le formulaire
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -30,14 +34,22 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager->persist($user);
+            //? perparer
+
             $entityManager->flush();
+            //? mettre en base de données
+
+
             // do anything else you need here, like send an email
+
+            $this->addFlash("success", "Vous êtes bien enregistré, Vous pouvez vous indentifier");
 
             return $this->redirectToRoute('home');
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $form->createView(), 
+            //! la fonction createView pour l'afficher avec twig
         ]);
     }
 }

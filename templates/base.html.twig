@@ -17,6 +17,13 @@
 
 	<body>
         {% include "front/shared/_navbar.html.twig" %}
+		{% for rubrique, messages in app.flashes %}
+				<div class="alert alert-{{ rubrique }}">
+					{% for message in messages %}
+						<p>{{ message }}</p>
+					{% endfor %}
+				</div>
+			{% endfor %}
             {% block body %}{% endblock %}
         {% include "front/shared/_footer.html.twig" %}
 	</body>
