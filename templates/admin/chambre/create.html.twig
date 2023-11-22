@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chambre ajout
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Chambre ajout</h1>
+		{{ form_start(form) }}
+        {{ form_errors(form) }}
+
+		{{ form_row(form.titre) }}
+		{{ form_row(form.description) }}
+		{{ form_row(form.prixJournalier) }}
+		{{ form_row(form.image) }}
+
+		<button type="submit" class="btn btn-success">Créer le produit</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

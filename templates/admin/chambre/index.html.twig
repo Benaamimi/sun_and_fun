@@ -3,5 +3,7 @@
 {% block title %}Hello ChambreController!{% endblock %}
 
 {% block body %}
-
+ {% for chambre in chambres %}
+    <p>{{ chambre.titre }}</p>
+ {% endfor %}
 {% endblock %}
