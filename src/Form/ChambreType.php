@@ -4,11 +4,14 @@ namespace App\Form;
 
 use App\Entity\Chambre;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChambreType extends AbstractType
 {
@@ -35,10 +38,23 @@ class ChambreType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Tapez le prix du produit en euro',
                 ],
-                'divisor' => 100,
+                // 'divisor' => 100,
                 'required' => false,
             ])
-            ->add('image')
+            ->add('image', FileType::class, [
+                'label' => 'Ajouter une image principale',
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est obligatoire '
+                    ]),
+                    new File([
+                        'maxSize' => '3m',
+                        'maxSizeMessage' => 'Le fichier ne doit pas dépasser 3 Mo en poids.',
+                    ])
+                ],
+            ])
         ;
     }
 

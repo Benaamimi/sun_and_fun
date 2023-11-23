@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChambreController!{% endblock %}
+{% block title %}Hello ChambreController!
+{% endblock %}
 
 {% block body %}
- {% for chambre in chambres %}
-    <p>{{ chambre.titre }}</p>
- {% endfor %}
+	<div class="container">
+		<div class="mt-4 row">
+			{% for chambre in chambres %}
+				<div class="col-md-4 container">
+					<div class="card border-primary mb-3" style="max-width: 20rem;">
+						<div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="" class="img-fluid"></div>
+						<div class="card-body">
+							<h4 class="card-title">{{chambre.titre}}</h4>
+							<p class="card-text">{{ chambre.description }}
+							</p>
+							<p class="card-text">{{ chambre.prixJournalier }}€ /Nuit</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

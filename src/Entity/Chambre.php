@@ -30,7 +30,6 @@ class Chambre
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     private ?string $image = null;
 
     #[ORM\Column]
