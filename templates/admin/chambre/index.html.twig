@@ -1,24 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChambreController!
+{% block title %}Sun and Fun - Listes des chambres
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="mt-4 row">
-			{% for chambre in chambres %}
-				<div class="col-md-4 container">
-					<div class="card border-primary mb-3" style="max-width: 20rem;">
-						<div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="" class="img-fluid"></div>
-						<div class="card-body">
-							<h4 class="card-title">{{chambre.titre}}</h4>
-							<p class="card-text">{{ chambre.description }}
-							</p>
-							<p class="card-text">{{ chambre.prixJournalier }}€ /Nuit</p>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-		</div>
+	<div class="container mt-4">
+		<h1 class="my-4">Les Chambres</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Titre</th>
+					<th scope="col">Image</th>
+					<th scope="col">Description</th>
+					<th scope="col">Prix par nuit</th>
+					<th scope="col">Date d'ajout</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for chambre in chambres %}
+					<tr class="table-light">
+						<th scope="row">{{ chambre.id }}</th>
+						<td>{{chambre.titre}}</td>
+						<td><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="{{chambre.titre}}" width="50"></td>
+						<td>{{ chambre.description }}</td>
+						<td>{{ chambre.prixJournalier }}€ /Nuit</td>
+						<td>{{ chambre.createdAt|date("d/m/Y") }}</td>
+						<td>
+							<a href="{{path('admin_chambre_show', {id: chambre.id})}}" class="btn btn-outline-primary btn-sm">Détails</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}

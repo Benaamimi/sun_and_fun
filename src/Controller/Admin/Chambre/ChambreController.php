@@ -16,6 +16,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/chambre', name: 'admin_')]
 class ChambreController extends AbstractController
 {
+
+    private $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     #[Route('/', name: 'chambre_index', methods: ['GET'])]
     public function index(ChambreRepository $chambreRepository): Response
     {
@@ -25,7 +33,7 @@ class ChambreController extends AbstractController
     }
 
     #[Route('/create', name: 'chambre_create',  methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
         $chambre = new Chambre;
 
@@ -44,7 +52,7 @@ class ChambreController extends AbstractController
             
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
+                $safeFilename = $this->slugger->slug($originalFilename);
 
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
@@ -71,5 +79,74 @@ class ChambreController extends AbstractController
         return $this->render('admin/chambre/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'chambre_show', methods: ['GET'])]
+    public function show(Chambre $chambre): Response
+    {
+        
+        return $this->render('admin/chambre/show.html.twig', [
+            'chambre' => $chambre
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'chambre_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Chambre $chambre, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(ChambreType::class, $chambre);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $imageFile = $form->get('image')->getData();
+
+            
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $this->slugger->slug($originalFilename);
+
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('img_upload'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+                $chambre->setImage($newFilename);
+
+            }
+
+            $em->flush();
+
+
+            $this->addFlash(
+                'success',
+                'La chambre a bien été modifier!'
+            );
+
+            return $this->redirectToRoute('admin_chambre_index');
+        }
+
+        return $this->render('admin/chambre/edit.html.twig', [
+            'chambre' => $chambre,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'chambre_delete', methods: ['GET'])]
+    public function delete(Chambre $chambre, EntityManagerInterface $em): Response
+    {
+        $em->remove($chambre);
+        $em->flush();
+
+        $this->addFlash(
+            'warning',
+            'La chambre a bien été supprimer!'
+        );
+               
+        return $this->redirectToRoute('admin_chambre_index');
     }
 }
