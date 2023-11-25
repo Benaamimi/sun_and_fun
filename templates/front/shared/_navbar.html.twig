@@ -35,11 +35,11 @@
 				<a class="btn btn-outline-danger btn-sm mx-4" href="{{ path('app_logout') }}">Deconnexion</a>
 			{% else %}
 				<a class="btn btn-outline-info btn-sm" href="{{ path('app_login') }}">Connexion</a>
-			{% endif %}
-
-			{% if not app.user %}
 				<a href="{{path('app_inscription')}}" class="btn btn-outline-success btn-sm ms-2">Inscription</a>
 			{% endif %}
+
+			{# {% if not app.user %}
+			{% endif %} #}
 		</div>
 	</div>
 </nav>
