@@ -21,8 +21,8 @@ class RegistrationFormType extends AbstractType
             ->add('civilite', ChoiceType::class, [
                 'label' => 'Civilité',
                 'choices'  => [
-                    'M.' => 'Homme',
-                    'Mme.' => 'Femme',
+                    'M.' => 'M.',
+                    'Mme.' => 'Mme.',
                 ],
             ])
             ->add('prenom', TextType::class, [
