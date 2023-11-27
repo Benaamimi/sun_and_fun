@@ -5,8 +5,8 @@
 
 {% block body %}
 	<div class="container mt-4">
-		<h1>Bonjour !</h1>
-		<h2>Bienvenue dans la plateforme de gestion des tâches !</h2>
+		<h1>Bonjour {{ app.user.nom }} !</h1>
+		<h2>Bienvenue dans la plateforme de gestion des tâches.</h2>
 		<div class="card mb-3 mt-4" style="max-width: 540px;">
 			<div class="row g-0">
 				<div class="col-md-4">
