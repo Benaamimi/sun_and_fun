@@ -20,26 +20,34 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">About</a>
 				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<a class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
-				</li>
 			</ul>
 			{% if app.user %}
-				<a class="btn btn-outline-danger btn-sm mx-4" href="{{ path('app_logout') }}">Deconnexion</a>
+				<div class="btn-group">
+					<a type="button" class="btn btn-outline-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fa fa-user me-2"></i>{{ app.user.email }}
+					</a>
+					<ul class="dropdown-menu">
+					{% if is_granted("ROLE_ADMIN") %}
+						<li>
+							<a class="dropdown-item" href="{{ path('admin_home_index') }}">Back office</a>
+						</li>
+					{% endif %}
+						<li>
+							<a class="dropdown-item" href="#">Ma réservation</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+						</li>
+					</ul>
+				</div>
 			{% else %}
 				<a class="btn btn-outline-info btn-sm" href="{{ path('app_login') }}">Connexion</a>
-				<a href="{{path('app_inscription')}}" class="btn btn-outline-success btn-sm ms-2">Inscription</a>
+				<a href="{{path('app_inscription')}}" class="btn btn-outline-primary btn-sm ms-2">Inscription</a>
 			{% endif %}
 
 			{# {% if not app.user %}
-			{% endif %} #}
+						{% endif %} #}
 		</div>
 	</div>
 </nav>
