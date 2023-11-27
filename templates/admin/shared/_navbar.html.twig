@@ -1,0 +1,58 @@
+<nav class="navbar bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Back office du site</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+			<div class="offcanvas-header">
+				<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Sun and Fun Admin</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="{{ path('admin_home_index') }}">Tableau de bord</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa fa-user me-2"></i>
+							gestion des utilisateurs
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_user_index') }}">Liste des utilisateurs</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_user_create') }}">Ajouter un utilisateur</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa fa-bed me-2"></i>
+							gestion des chambers
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_chambre_index') }}">Liste des chambres</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_chambre_create') }}">Ajouter une chambre</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('home') }}">retour au site</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-danger" href="{{ path('app_logout') }}">déconnexion</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
