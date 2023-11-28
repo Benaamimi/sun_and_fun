@@ -21,19 +21,24 @@
 					<a class="nav-link" href="#">About</a>
 				</li>
 			</ul>
-			{% if app.user %}
+			{#? si l'utilisateur est bien connecté #}
+			{% if app.user %} 
 				<div class="btn-group">
-					<a type="button" class="btn btn-outline-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					<a type="button" class="btn btn-outline-info btn-sm dropdown-toggle rounded-pill" data-bs-toggle="dropdown" aria-expanded="false">
+					{#? app.user.email pour afficher l'email de l'utilisateur connecté #}
 						<i class="fa fa-user me-2"></i>{{ app.user.email }}
 					</a>
 					<ul class="dropdown-menu">
-					{% if is_granted("ROLE_ADMIN") %}
+
+					{#? le backoffice s'affiche que si connecté autant que role_admin #}
+					{% if is_granted("ROLE_ADMIN") %} 
 						<li>
 							<a class="dropdown-item" href="{{ path('admin_home_index') }}">Back office</a>
 						</li>
 					{% endif %}
+
 						<li>
-							<a class="dropdown-item" href="#">Ma réservation</a>
+							<a class="dropdown-item" href="#">Mes réservations</a>
 						</li>
 						<li><hr class="dropdown-divider"></li>
 						<li>
@@ -43,7 +48,6 @@
 				</div>
 			{% else %}
 				<a class="btn btn-outline-info btn-sm" href="{{ path('app_login') }}">Connexion</a>
-				<a href="{{path('app_inscription')}}" class="btn btn-outline-primary btn-sm ms-2">Inscription</a>
 			{% endif %}
 
 			{# {% if not app.user %}
