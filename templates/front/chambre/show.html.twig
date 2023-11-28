@@ -1,0 +1,30 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Detail de chambre
+{% endblock %}
+
+{% block body %}
+
+	<div class="position-relative">
+		<img class="card-img" src="{{ asset("/uploads/" ~ chambre.image) }}"></img>
+	<div class="position-absolute top-50 start-50 translate-middle text-center">
+		<h1 class="text-light fw-bold">{{ chambre.titre }}</h1>
+	</div>
+</div>
+
+<div class="container mt-4">
+	<div class="">
+		<div class="row">
+			<div class="col">
+				<img src="{{asset('img/apropo.jpg')}}" alt="" width="600">
+			</div>
+			<div class="col">
+				<img src="{{asset('img/apropo.jpg')}}" alt="" width="600">
+			</div>
+		</div>
+		<h3 class="mt-4">Description</h3>
+		<p class="col-4">{{ chambre.description }}</p>
+	</div>
+</div>
+
+{% endblock %}
