@@ -4,14 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		<div class="d-flex justify-content-center align-self-center">
-
-			<div class="">
-				<img class="img_fluide me-2" src="https://picsum.photos/2000" alt="" width="500">
+	<div class="w-50 p-5 rounded mx-auto my-4 shadow-lg">
+		<div class="row">
+			<div class="col">
+				<img class="img_fluide me-2" src="{{asset('img/apropo.jpg')}}" alt="" width="400">
 			</div>
 
-			<div class="mx-2 align-self-center">
+			<div class="col">
 				<form method="post">
 					{% if error %}
 						<div class="alert alert-danger">Il ya une erreur dans votre email ou mot de passe, veuillez réessayer !</div>
@@ -24,7 +23,7 @@
 							<a href="{{ path('app_logout') }}">Logout</a>
 						</div>
 					{% endif %}
-					
+
 					<h1 class="h3 mb-3 font-weight-normal">Identifiez-vous</h1>
 					<label for="inputEmail">Email</label>
 					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -36,11 +35,11 @@
 					<button class="btn btn-success mt-3" type="submit">
 						connexion
 					</button>
-					<p class="mt-4">Vous pouvez vous inscrire en cliquant
-						<a href="{{path('app_inscription')}}" class="text-success">ici</a>
-					</p>
 				</form>
 			</div>
+			<p class="mt-4 text-center">Vous pouvez vous inscrire en cliquant
+				<a href="{{path('app_inscription')}}" class="text-success">ici</a>
+			</p>
 		</div>
 	</div>
 {% endblock %}

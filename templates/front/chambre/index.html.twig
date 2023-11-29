@@ -1,0 +1,41 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Chambres
+{% endblock %}
+
+{% block body %}
+
+
+	<div id="video" class="position-relative">
+		<video autoplay loop muted class="d-block w-100" src="{{asset("video/chambre.mp4")}}"></video>
+		<div class="position-absolute top-50 start-50 translate-middle text-center">
+			<h1 class="text-light">Réservez votre chambre</h1>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<h2 class="text-center mt-4">Nos chambres disponible</h2>
+
+		<div class="mt-4 row gx-3">
+			{% for chambre in chambres %}
+				<div class="col-md-4 container">
+					<div class="card border-primary mb-3 rounded shadow-lg my-4" style="max-width: 20rem;">
+						<div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="{{ chambre.titre }}" class="img-fluid"></div>
+						<div class="card-body">
+							<h4 class="card-title">{{chambre.titre}}</h4>
+							<p class="card-text text">{{ chambre.description|u.truncate(150, '...', false)}}...
+								{# <a class="" href="{{path('chambre_details', {id: chambre.id})}}">voir plus</a> #}
+							</p>
+							<p class="card-text fw-bold">{{ chambre.prixJournalier }}
+								€/jour</p>
+							<a href="{{ path('chambre_show', {'id': chambre.id}) }}" class="btn btn-outline-primary">Voir details</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}
