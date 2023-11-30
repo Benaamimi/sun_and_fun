@@ -29,7 +29,7 @@ class ChambreController extends AbstractController
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
 
-        $form = $this->createForm(ReservationType::class, $reservation);
+        $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => false]);
 
         $form->handleRequest($request);
 
@@ -54,7 +54,7 @@ class ChambreController extends AbstractController
             $em->persist($reservation);
             $em->flush();
             $this->addFlash('success', 'Votre reservation a bien été valider!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('chambre_index');
 
         }
 

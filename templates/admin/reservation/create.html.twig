@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Chambre ajout
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1 class="my-4 text-center">Réservation</h1>
+
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="row">
+			<div class="col-12">
+				{{ form_row(form.chambre) }}
+			</div>
+			<div class="col-6">
+				{{ form_row(form.checkingAt) }}
+			</div>
+			<div class="col-6">
+				{{ form_row(form.checkoutAt) }}
+			</div>
+			<div class="col-6">
+				{{ form_row(form.nom) }}
+			</div>
+			<div class="col-6">
+				{{ form_row(form.prenom) }}
+			</div>
+			<div class="col-12">
+				{{ form_row(form.personneNumber) }}
+			</div>
+			<div class="col-12">
+				{{ form_row(form.email) }}
+			</div>
+			<div class="col-12">
+				{{ form_row(form.phone) }}
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Réservez</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	{% endblock %}

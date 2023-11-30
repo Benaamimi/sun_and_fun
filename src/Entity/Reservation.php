@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -15,27 +17,39 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $checkingAt = null;
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    private ?\DateTime $checkingAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $checkoutAt = null;
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    private ?\DateTime $checkoutAt = null;
 
     #[ORM\Column]
     private ?int $prixTotal = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     private ?string $nom = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    #[Assert\Positive( message: "Le nombre ne peut pas être négatif")]
+    #[Assert\Length(
+        max: 3,
+        maxMessage: "Le nombre ne doit pas dépasser {{ limit }} personne",
+    )]
     private ?int $personneNumber = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -54,24 +68,24 @@ class Reservation
         return $this->id;
     }
 
-    public function getCheckingAt(): ?\DateTimeImmutable
+    public function getCheckingAt(): ?\DateTime
     {
         return $this->checkingAt;
     }
 
-    public function setCheckingAt(\DateTimeImmutable $checkingAt): static
+    public function setCheckingAt(\DateTime $checkingAt): static
     {
         $this->checkingAt = $checkingAt;
 
         return $this;
     }
 
-    public function getCheckoutAt(): ?\DateTimeImmutable
+    public function getCheckoutAt(): ?\DateTime
     {
         return $this->checkoutAt;
     }
 
-    public function setCheckoutAt(\DateTimeImmutable $checkoutAt): static
+    public function setCheckoutAt(\DateTime $checkoutAt): static
     {
         $this->checkoutAt = $checkoutAt;
 
@@ -173,4 +187,6 @@ class Reservation
 
         return $this;
     }
+
+
 }
