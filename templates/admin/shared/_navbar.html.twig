@@ -1,6 +1,6 @@
 <nav class="navbar bg-body-tertiary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('home') }}">Retour a la page d'accueil</a>
+		<a class="navbar-brand" href="{{ path('home') }}"><i class="fa fa-home me-2"></i>Retour à la page d'accueil</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -45,8 +45,22 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa fa-bell me-2"></i>
+							gestion des reservations
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_reservation_index') }}">Liste des reservations</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_reservation_create') }}">Ajouter une reservations</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('home') }}">retour au site</a>
+						<a class="nav-link" href="{{ path('home') }}"><i class="fa fa-home me-2"></i> retour au site</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link text-danger" href="{{ path('app_logout') }}">déconnexion</a>

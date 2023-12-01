@@ -38,7 +38,7 @@
 						<td>{{ reservation.phone }}</td>
 						<td>{{ reservation.createdAt|date("d/m/Y H:i") }}</td>
 						<td>
-							<a href="#" class="btn btn-outline-primary btn-sm">Détails</a>
+							<a href="{{ path('admin_reservation_show', {'id': reservation.id }) }}" class="btn btn-outline-primary btn-sm">Détails</a>
 						</td>
 					</tr>
 				{% endfor %}

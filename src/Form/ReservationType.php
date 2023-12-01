@@ -45,7 +45,9 @@ class ReservationType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => 'Nom'
             ])
-            ->add('personneNumber')
+            ->add('personneNumber', NumberType::class,[
+                'label' => 'Nombre de personne (Moins de 3 personne par chambre)'
+            ])
             ->add('phone', NumberType::class, [
                 'label' => 'Numero de téléphone',
             ])

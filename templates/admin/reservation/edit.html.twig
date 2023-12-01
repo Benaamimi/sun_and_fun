@@ -1,20 +1,17 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Chambre ajout
+{% block title %}reservation modification
 {% endblock %}
 
 {% block body %}
 	<div class="container mt-4">
-		<h1 class="my-4 text-center">Réservation</h1>
+		<h1 class="my-4 text-center">Modifier la reservation</h1>
 
 		{{ form_start(form) }}
 		{{ form_errors(form) }}
 		<div class="row">
-			<div class="col-12">
-				{{ form_row(form.chambre) }}
-			</div>
 			<div class="col-6">
-				{{ form_row(form.checkingAt) }} 
+				{{ form_row(form.checkingAt) }}
 			</div>
 			<div class="col-6">
 				{{ form_row(form.checkoutAt) }}
@@ -36,7 +33,7 @@
 			</div>
 
 			<div class="form-group">
-				<button type="submit" class="btn btn-success">Réservez</button>
+				<button type="submit" class="btn btn-success">Modifiez</button>
 			</div>
 			{{ form_end(form) }}
 		</div>

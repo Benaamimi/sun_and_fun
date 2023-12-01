@@ -5,52 +5,23 @@
 
 {% block body %}
 	<div class="container mt-4">
-		<h1>Bonjour {{ app.user.nom }} !</h1>
-		<h2>Bienvenue dans la plateforme de gestion des tâches.</h2>
-		<div class="card mb-3 mt-4" style="max-width: 540px;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="{{ asset('img/user.jpg') }}" class="img-fluid rounded-start" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<h5 class="card-title">Utilisateurs</h5>
-						<p class="card-text">Bienvenue dans l'espace dédié à la gestion des utilisateurs.
-						</p>
-						<a href="{{ path('admin_user_index') }}" class="btn btn-primary">Gestion des utilisateurs</a>
-					</div>
-				</div>
+
+		<h1 class="fw-bold  text-center">Bonjour "{{ app.user.nom }}" !</h1>
+		<h2 class="fw-light text-center">Bienvenue dans la plateforme de gestion des tâches.</h2>
+
+		<div class="mt-5">
+			<div class="mt-4 text-center">
+				<a href="{{ path('admin_reservation_index') }}" class="btn btn-outline-primary"><i class="fa fa-key me-2"></i>Gestion des réservations</a>
+			</div>
+			<div class="mt-4 text-center">
+				<a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary"><i class="fa fa-user me-2"></i>Gestion des utilisateurs</a>
+			</div>
+			<div class="mt-4 text-center">
+				<a href="{{ path('admin_chambre_index') }}" class="btn btn-outline-primary"><i class="fa fa-bed me-2"></i>Gestion des Chambres</a>
 			</div>
 		</div>
-		<div class="card mb-3" style="max-width: 540px;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="{{ asset('img/chamber.jpg') }}" class="img-fluid rounded-start" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<h5 class="card-title">Chambres</h5>
-						<p class="card-text">Bienvenue dans l'espace dédié à la gestion des chambres.
-						</p>
-						<a href="{{ path('admin_chambre_index') }}" class="btn btn-primary">Gestion des Chambres</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card mb-3" style="max-width: 540px;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="{{ asset('img/reser.jpg') }}" class="img-fluid rounded-start" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<h5 class="card-title">Réservations</h5>
-						<p class="card-text">Bienvenue dans l'espace dédié à la gestion des réservation.
-						</p>
-						<a href="#" class="btn btn-primary">Gestion des réservations</a>
-					</div>
-				</div>
-			</div>
-		</div>
+
 	</div>
+
+
 {% endblock %}

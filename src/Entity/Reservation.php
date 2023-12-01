@@ -38,10 +38,7 @@ class Reservation
     #[ORM\Column]
     #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
     #[Assert\Positive( message: "Le nombre ne peut pas être négatif")]
-    #[Assert\Length(
-        max: 3,
-        maxMessage: "Le nombre ne doit pas dépasser {{ limit }} personne",
-    )]
+    #[Assert\LessThanOrEqual('3', message:'Moins que 3 personne par chambre')]
     private ?int $personneNumber = null;
 
     #[ORM\Column(length: 255)]
