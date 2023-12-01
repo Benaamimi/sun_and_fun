@@ -1,0 +1,51 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+	Réservation
+	{{ reservation.chambre.titre }}
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-8">
+				<h1>{{ reservation.chambre.titre }}
+					{{ reservation.chambre.prixJournalier }}&euro; /Nuit</h1>
+				<div class="col-lg-8 col-6 mb-2">
+					<img class="img_fluide" src="{{ asset("/uploads/" ~ reservation.chambre.image) }}" alt="Image de {{ reservation.chambre.titre }}" width="500">
+				</div>
+				<div class="text-block mt-4">
+					<h2 class="mt-4">Détail de la reservation:</h2>
+					<div class="mt-4">
+						<h4 class="fw-light">Date d'arrivée:
+							{{ reservation.checkingAt|date('d/m/Y H:i') }}</h4>
+						<h4 class="fw-light">Date de départ:
+							{{ reservation.checkoutAt|date('d/m/Y H:i') }}</h4>
+						<h4 class="fw-light">Nom:
+							{{ reservation.nom }}</h4>
+						<h4 class="fw-light">Prénom:
+							{{ reservation.prenom }}</h4>
+						<h4 class="fw-light">Nombre de personne:
+							{{ reservation.personneNumber }}</h4>
+						<h4 class="fw-light">Adresse email:
+							{{ reservation.email }}</h4>
+						<h4 class="fw-light">Téléphone:
+							{{ reservation.phone }}</h4>
+						<h4 class="fw-light">Date de la réservation:
+							{{ reservation.createdAt|date("d/m/Y H:i") }}</h4>
+						<h4 class="mt-4">Prix Total:
+							{{ reservation.prixTotal }}&euro;</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn btn-sm btn-info me-2 mt-4" href="{{ path('admin_reservation_edit',{ 'id' : reservation.id }) }}">
+			<i class="fas fa-pen me-2"></i>
+			Modifier
+		</a>
+		<a class="btn btn-sm btn-danger mt-4" href="{{ path('admin_reservation_delete', { 'id' : reservation.id }) }}">
+			<i class="fas fa-trash me-2"></i>
+			Supprimer
+		</a>
+	</div>
+{% endblock %}

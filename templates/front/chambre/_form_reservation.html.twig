@@ -4,21 +4,25 @@
 	</button>
 </p>
 <div class="collapse" id="collapseExample">
-<h5 class="col-4">{{ chambre.prixJournalier }}&euro; /Nuit</h5>
-	<form>
-		<div class="mb-3">
-			<label for="exampleInputEmail1" class="form-label">Email address</label>
-			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+	<h5 class="col-4">{{ chambre.prixJournalier }}&euro; /Nuit</h5>
+	<div class="col-6">
+		{{ form_start(formChambre) }}
+        {{ form_errors(formChambre) }}
+
+		<div class="col-4">
+		{{ form_row(formChambre.checkingAt) }}
 		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">Password</label>
-			<input type="password" class="form-control" id="exampleInputPassword1">
+		<div class="col-4">
+		{{ form_row(formChambre.checkoutAt) }}
 		</div>
-		<div class="mb-3 form-check">
-			<input type="checkbox" class="form-check-input" id="exampleCheck1">
-			<label class="form-check-label" for="exampleCheck1">Check me out</label>
-		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+		{{ form_row(formChambre.nom) }}
+		{{ form_row(formChambre.prenom) }}
+		{# {{ form_label(formChambre.personneNumber, 'Nombre de personne') }}
+		{{ form_widget(formChambre.personneNumber) }} #}
+		{{ form_row(formChambre.personneNumber) }}
+		{{ form_row(formChambre.email) }}
+		{{ form_row(formChambre.phone) }}
+		<button type="submit" class="btn btn-primary my-4">Reservez</button>
+		{{ form_end(formChambre) }}
+	</div>
 </div>

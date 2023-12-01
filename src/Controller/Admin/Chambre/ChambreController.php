@@ -139,7 +139,7 @@ class ChambreController extends AbstractController
     #[Route('/{id}/delete', name: 'chambre_delete', methods: ['GET'])]
     public function delete(Chambre $chambre, EntityManagerInterface $em): Response
     {
-        $em->remove($chambre); //! Suppression de la chambre
+        $em->remove($chambre); //* Suppression de la chambre
         $em->flush();
 
         $this->addFlash(
