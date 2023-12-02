@@ -15,6 +15,7 @@
 					<th scope="col">Image</th>
 					<th scope="col">Déscription</th>
 					<th scope="col">Prix</th>
+					<th scope="col">Disponibilité</th>
 					<th scope="col" colspan="2">Date d'ajout</th>
 				</tr>
 			</thead>
@@ -26,7 +27,8 @@
 						<td><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="{{chambre.titre}}" width="50"></td>
 						<td>{{ chambre.description }}</td>
 						<td>{{ chambre.prixJournalier }}€ /Nuit</td>
-						<td>{{ chambre.createdAt|date("d/m/Y") }}</td>
+						<td>{{ chambre.isDisponible ? 'Disponible':'En attente' }}</td>
+						<td>{{ chambre.createdAt|date("d/m/Y H:i") }}</td>
 						<td>
 							<a href="{{path('admin_chambre_show', {id: chambre.id})}}" class="btn btn-outline-primary btn-sm">Détails</a>
 						</td>

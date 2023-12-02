@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Chambre;
 
 use App\Entity\Chambre;
+use App\Form\ChambreDisponibleType;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +29,7 @@ class ChambreController extends AbstractController
     public function index(ChambreRepository $chambreRepository): Response
     {
         return $this->render('admin/chambre/index.html.twig', [
-            'chambres' => $chambreRepository->findAll()
+            'chambres' => $chambreRepository->findBy([], ['titre'=>'ASC'])
         ]);
     }
 
@@ -39,13 +40,14 @@ class ChambreController extends AbstractController
 
         $form = $this->createForm(ChambreType::class, $chambre);
         //? création du formulaire a partir de la class Chambre avec le ChambreType::class
-
+        
+        
         $form->handleRequest($request);
 
-
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // $chambre = $form->getData();
+            
 
             $imageFile = $form->get('image')->getData();
 
@@ -81,12 +83,23 @@ class ChambreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'chambre_show', methods: ['GET'])]
-    public function show(Chambre $chambre): Response
+    #[Route('/{id}', name: 'chambre_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Chambre $chambre, EntityManagerInterface $em): Response
     {
+        $form = $this->createForm(ChambreDisponibleType::class, $chambre);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $em->flush();
+
+
+            return $this->redirectToRoute('admin_chambre_index');
+        }
         
         return $this->render('admin/chambre/show.html.twig', [
-            'chambre' => $chambre
+            'chambre' => $chambre,
+            'form' => $form
         ]);
     }
 

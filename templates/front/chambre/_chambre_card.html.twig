@@ -1,0 +1,13 @@
+<div class="col-md-4 container">
+	<div class="card border-primary mb-3 rounded shadow-lg my-4" style="max-width: 20rem;">
+		<div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image) }}" alt="{{ chambre.titre }}" class="img-fluid"></div>
+		<div class="card-body">
+			<h4 class="card-title">{{chambre.titre}}</h4>
+			<p class="card-text text">{{ chambre.description|u.truncate(150, '...', false)}}...
+			</p>
+			<p class="card-text fw-bold">{{ chambre.prixJournalier }}
+				€/jour</p>
+			<a href="{{ path('chambre_show', {'id': chambre.id}) }}" class="btn btn-outline-primary">Voir details</a>
+		</div>
+	</div>
+</div>

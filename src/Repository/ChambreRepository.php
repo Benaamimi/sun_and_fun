@@ -21,20 +21,41 @@ class ChambreRepository extends ServiceEntityRepository
         parent::__construct($registry, Chambre::class);
     }
 
-//    /**
-//     * @return Chambre[] Returns an array of Chambre objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+   public function findChambreDisponible()
+   {
+    $queryBuilder = $this->createQueryBuilder('c');
+
+    // Sélectionnez les chambres qui n'ont pas de réservations
+    $queryBuilder->leftJoin('c.reservations', 'r');
+    $queryBuilder->where($queryBuilder->expr()->isNull('r.id'));
+
+    return $queryBuilder->getQuery()->getResult();
+   }
+
+   public function findChambresDisponibles()
+   {
+       return $this->createQueryBuilder('c')
+           ->andWhere('c.isDisponible = :isDisponible')
+           ->setParameter('isDisponible', true)
+           ->getQuery()
+           ->getResult();
+   }
+
+   public function findChambresNonReservees()
+{
+    return $this->createQueryBuilder('c')
+        ->leftJoin('c.reservations', 'r')
+        ->where('r.id IS NULL')
+        ->andWhere('c.isDisponible = :isDisponible')
+        ->setParameter('isDisponible', true)
+        ->orderBy('c.titre', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+
 
 //    public function findOneBySomeField($value): ?Chambre
 //    {
