@@ -18,8 +18,10 @@ class ChambreController extends AbstractController
     #[Route('/chambre', name: 'chambre_index', methods: ['GET'])]
     public function index(ChambreRepository $chambreRepository): Response
     {
+        $chambreDisponible = $chambreRepository->findChambresNonReservees();
+
         return $this->render('front/chambre/index.html.twig', [
-            'chambres' => $chambreRepository->findAll()
+            'chambres' => $chambreDisponible
         ]);
     }
 

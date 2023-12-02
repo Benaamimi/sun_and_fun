@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ChambreRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Reservation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChambreRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -44,6 +45,10 @@ class Chambre
 
     #[ORM\OneToMany(mappedBy: 'chambre', targetEntity: Reservation::class)]
     private Collection $reservations;
+
+    #[ORM\Column]
+    private ?bool $isDisponible = null;
+
 
     public function __construct()
     {
@@ -145,4 +150,17 @@ class Chambre
 
         return $this;
     }
+
+    public function isIsDisponible(): ?bool
+    {
+        return $this->isDisponible;
+    }
+
+    public function setIsDisponible(bool $isDisponible): static
+    {
+        $this->isDisponible = $isDisponible;
+
+        return $this;
+    }
+
 }
