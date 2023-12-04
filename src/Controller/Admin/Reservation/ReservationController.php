@@ -24,7 +24,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/create', name: 'reservation_create', methods: ['GET', 'POST'])]
-    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em, User $user): Response
+    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em): Response
     {
         if(!$reservation){
             $reservation = new Reservation;
