@@ -8,10 +8,11 @@ use App\Form\ReservationType;
 use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 class ChambreController extends AbstractController
@@ -27,7 +28,7 @@ class ChambreController extends AbstractController
     }
 
     #[Route('/chambre/detail/{id}', name: 'chambre_show', methods: ['GET', 'POST'])]
-    public function show(Chambre $id, Request $request, ChambreRepository $chambreRepository, EntityManagerInterface $em): Response
+    public function show(Chambre $id, Request $request, ChambreRepository $chambreRepository, EntityManagerInterface $em, MailerInterface $mailer): Response
     {
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
@@ -58,6 +59,28 @@ class ChambreController extends AbstractController
 
             $em->persist($reservation);
             $em->flush();
+
+            //! envoie de mail Utilisateur
+            $email = (new Email())
+            ->from('sunandfun.noreply@gmail.com')
+            ->to($reservation->getEmail())
+            ->subject('Comfirmation de reservation')
+            ->html('<p>Votre réservation est confirmée</p>');
+
+            $mailer->send($email);
+
+            //! Admin
+            $email = (new Email())
+            ->from('sunandfun.noreply@gmail.com')
+            ->to('tarikbenaamimi@gmail.com')
+            ->subject('Nouvelle reservation effectuer')
+            ->html('<p>un utilisateur viens de reserver une chambre </p>');
+
+            $mailer->send($email);
+
+            //! fin de l'envoie
+
+
             $this->addFlash('success', 'Votre reservation a bien été valider!');
             return $this->redirectToRoute('chambre_index');
 
