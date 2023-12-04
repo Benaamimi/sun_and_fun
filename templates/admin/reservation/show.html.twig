@@ -9,8 +9,7 @@
 	<div class="container py-5">
 		<div class="row">
 			<div class="col-lg-8">
-				<h1>{{ reservation.chambre.titre }}
-					{{ reservation.chambre.prixJournalier }}&euro; /Nuit</h1>
+				<h1>{{ reservation.chambre.titre }} ({{ reservation.chambre.prixJournalier }}&euro; /Nuit)</h1>
 				<div class="col-lg-8 col-6 mb-2">
 					<img class="img_fluide" src="{{ asset("/uploads/" ~ reservation.chambre.image) }}" alt="Image de {{ reservation.chambre.titre }}" width="500">
 				</div>

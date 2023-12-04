@@ -17,7 +17,11 @@
 	<div class="container">
 		<h2 class="text-center mt-4">Nos chambres disponible</h2>
 
+
 		<div class="mt-4 row gx-3">
+			<p class="mb-3">{{ chambres|length }}
+				Chambres disponible</p>
+			<hr>
 
 			{% if chambres is empty %}
 

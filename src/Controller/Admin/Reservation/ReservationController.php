@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Reservation;
 
+use App\Entity\User;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,13 +24,15 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/create', name: 'reservation_create', methods: ['GET', 'POST'])]
-    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em): Response
+    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em, User $user): Response
     {
         if(!$reservation){
             $reservation = new Reservation;
         }
-
+        
+        
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => true]);
+        
 
         $form->handleRequest($request);
 
@@ -66,7 +69,7 @@ class ReservationController extends AbstractController
 
     #[Route('/{id}', name: 'reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
-    {
+    {    
         
         return $this->render('admin/reservation/show.html.twig', [
             'reservation' => $reservation
