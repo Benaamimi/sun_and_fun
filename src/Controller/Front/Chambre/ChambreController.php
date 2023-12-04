@@ -8,6 +8,7 @@ use App\Form\ReservationType;
 use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,11 +31,13 @@ class ChambreController extends AbstractController
     {
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
-
+        
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => false]);
 
+        
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $checking = $reservation->getCheckingAt();
             $reservation->setChambre($chambre); 

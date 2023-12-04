@@ -55,6 +55,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Chambre $chambre = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
@@ -181,6 +184,18 @@ class Reservation
     public function setChambre(?Chambre $chambre): static
     {
         $this->chambre = $chambre;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
