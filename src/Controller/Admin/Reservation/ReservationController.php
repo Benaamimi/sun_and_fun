@@ -7,6 +7,7 @@ use App\Entity\Reservation;
 use App\Form\ReservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
+use App\Service\MailerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +25,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/create', name: 'reservation_create', methods: ['GET', 'POST'])]
-    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em): Response
+    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em, MailerService $mailerService): Response
     {
         if(!$reservation){
             $reservation = new Reservation;
@@ -37,9 +38,7 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $checking = $reservation->getCheckingAt();
-
             if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
                 $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
                 if ($reservation->getId())
@@ -57,7 +56,15 @@ class ReservationController extends AbstractController
 
             $em->persist($reservation);
             $em->flush();
-            $this->addFlash('success', 'Votre reservation a bien été valider!');
+
+            //! envoie de mail Utilisateur
+            $mailerService->sendMailToUser($reservation->getEmail(), $reservation);
+
+             //! envoie de mail Admin
+             $mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
+
+            
+            $this->addFlash('success', 'La reservation a bien été confirmer!');
             return $this->redirectToRoute('admin_reservation_index');
 
         }
