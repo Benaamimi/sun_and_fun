@@ -8,6 +8,7 @@ use App\Form\ReservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use App\Service\MailerService;
+use App\Service\ReservationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/reservation', name: 'admin_')]
 class ReservationController extends AbstractController
 {
+    private $reservationService;
+
+    public function __construct(ReservationService $reservationService)
+    {  
+        $this->reservationService = $reservationService;
+    }
+
     #[Route('/', name: 'reservation_index')]
     public function index(ReservationRepository $reservationRepository): Response
     {
@@ -30,29 +38,15 @@ class ReservationController extends AbstractController
         if(!$reservation){
             $reservation = new Reservation;
         }
-        
-        
+
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => true]);
-        
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $checking = $reservation->getCheckingAt();
-            if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
-                $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
-                if ($reservation->getId())
-                    return $this->redirectToRoute('admin_reservation_create', [
-                        'id' => $reservation->getId()
-                    ]);
-                else
-                    return $this->redirectToRoute('admin_reservation_create');
-            }
-
-            $days = $checking->diff($reservation->getCheckoutAt())->days;
-            $prixTotal = ($reservation->getChambre()->getPrixJournalier() * $days) + $reservation->getChambre()->getPrixJournalier();
-
-            $reservation->setPrixTotal($prixTotal);
+            
+            //! Reservation de chambre avec injection de dependance
+            $this->reservationService->reservationAdmin($reservation);
 
             $em->persist($reservation);
             $em->flush();
@@ -63,7 +57,6 @@ class ReservationController extends AbstractController
              //! envoie de mail Admin
              $mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
 
-            
             $this->addFlash('success', 'La reservation a bien été confirmer!');
             return $this->redirectToRoute('admin_reservation_index');
 
@@ -88,29 +81,12 @@ class ReservationController extends AbstractController
     {
 
         $form = $this->createForm(ReservationType::class, $reservation);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $checking = $reservation->getCheckingAt();
+            $this->reservationService->reservationAdmin($reservation);
 
-            if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
-                $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
-                if ($reservation->getId())
-                    return $this->redirectToRoute('admin_reservation_create', [
-                        'id' => $reservation->getId()
-                    ]);
-                else
-                    return $this->redirectToRoute('admin_reservation_create');
-            }
-
-            $days = $checking->diff($reservation->getCheckoutAt())->days;
-            $prixTotal = ($reservation->getChambre()->getPrixJournalier() * $days) + $reservation->getChambre()->getPrixJournalier();
-
-            $reservation->setPrixTotal($prixTotal);
-
-        
             $em->flush();
 
             $this->addFlash('success', 'La reservation a bien été modifier!');
