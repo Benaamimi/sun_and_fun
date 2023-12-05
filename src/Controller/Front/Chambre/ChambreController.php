@@ -6,6 +6,7 @@ use App\Entity\Chambre;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ChambreRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,7 @@ class ChambreController extends AbstractController
     }
 
     #[Route('/chambre/detail/{id}', name: 'chambre_show', methods: ['GET', 'POST'])]
-    public function show(Chambre $id, Request $request, ChambreRepository $chambreRepository, EntityManagerInterface $em, MailerInterface $mailer): Response
+    public function show(Chambre $id, Request $request, ChambreRepository $chambreRepository, EntityManagerInterface $em, MailerService $mailerService): Response
     {
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
@@ -61,32 +62,15 @@ class ChambreController extends AbstractController
             $em->flush();
 
             //! envoie de mail Utilisateur
-            $email = (new Email())
-            ->from('sunandfun.noreply@gmail.com')
-            ->to($reservation->getEmail())
-            ->subject('Comfirmation de reservation')
-            ->html('<p>Votre réservation est confirmée</p>');
+            $mailerService->sendMailToUser($reservation->getEmail(), $reservation);
 
-            $mailer->send($email);
+            //! envoie de mail Admin
+            $mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
 
-            //! Admin
-            $email = (new Email())
-            ->from('sunandfun.noreply@gmail.com')
-            ->to('tarikbenaamimi@gmail.com')
-            ->subject('Nouvelle reservation effectuer')
-            ->html('<p>un utilisateur viens de reserver une chambre </p>');
-
-            $mailer->send($email);
-
-            //! fin de l'envoie
-
-
-            $this->addFlash('success', 'Votre reservation a bien été valider!');
+            $this->addFlash('success', 'Merci pour votre reservation! Vous avez reçu un email de confirmation.');
             return $this->redirectToRoute('chambre_index');
 
         }
-
-
 
         return $this->render('front/chambre/show.html.twig', [
             'formChambre' => $form,

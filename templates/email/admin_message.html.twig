@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			
+        <style>/* le style de l'email */</style>
+	<title>Chambre réservée
+	</title>
+</head>
+<body>
+	<div>
+		<h1>Bonjour une chambre a été réserver par
+			{{ reservation.prenom }} {{ reservation.nom }} !</h1>
+		<p>reservation de {{ reservation.chambre.titre }} à {{ reservation.createdAt|date("d/m/Y H:i") }}</p>
+	</div>
+	<div class="text-block mt-4">
+		<h2 class="mt-4 text-success">Détail de la réservation:</h2>
+		<div class="mt-4">
+			<h4 class="fw-light">Date d'arrivée:
+				{{ reservation.checkingAt|date('d/m/Y H:i') }}</h4>
+			<h4 class="fw-light">Date de départ:
+				{{ reservation.checkoutAt|date('d/m/Y H:i') }}</h4>
+			<h4 class="fw-light">Nom:
+				{{ reservation.nom }}</h4>
+			<h4 class="fw-light">Prénom:
+				{{ reservation.prenom }}</h4>
+			<h4 class="fw-light">Nombre de personne:
+				{{ reservation.personneNumber }}</h4>
+			<h4 class="fw-light">Téléphone:
+				{{ reservation.email }}</h4>
+			<h4 class="fw-light">Téléphone:
+				{{ reservation.phone }}</h4>
+			<h3 class="mt-4 text-info">Prix Total:
+				{{ reservation.prixTotal }}&euro;</h3>
+		</div>
+	</div>
+
+</body></html>
