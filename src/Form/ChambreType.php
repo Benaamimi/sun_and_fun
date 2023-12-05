@@ -56,6 +56,16 @@ class ChambreType extends AbstractType
                     ])
                 ],
             ])
+            ->add('isDisponible', ChoiceType::class, [
+                'choices' => [
+                    'Disponible' => true,
+                    'En attente' => false
+                ],
+                'label' => 'Disponibilité',
+                'expanded' => true,
+                'multiple' => false,
+                'data' => true
+            ])
             ;
     }
 

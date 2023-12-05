@@ -6,6 +6,7 @@ use App\Entity\Chambre;
 use App\Form\ChambreDisponibleType;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
+use App\Service\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +19,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ChambreController extends AbstractController
 {
 
-    private $slugger;
+    private $imageUpload;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(ImageUploadService $imageUpload)
     {
-        $this->slugger = $slugger;
+        $this->imageUpload = $imageUpload;
     }
 
     #[Route('/', name: 'chambre_index', methods: ['GET'])]
@@ -47,31 +48,14 @@ class ChambreController extends AbstractController
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
+        
+            //! image upload avec injection de dependance
+            $this->imageUpload->ImageUpload($form, $chambre);
 
-            $imageFile = $form->get('image')->getData();
-
-            
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $this->slugger->slug($originalFilename);
-
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        $this->getParameter('img_upload'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-
-                }
-                $chambre->setImage($newFilename);
-
-            }
-
+            //! mettre en base de donnée
             $em->persist($chambre);
             $em->flush();
+
 
             $this->addFlash("success", "la Chambre à bien été ajouter !");
 
@@ -79,7 +63,8 @@ class ChambreController extends AbstractController
         }
 
         return $this->render('admin/chambre/create.html.twig', [
-            'form' => $form->createView(),
+            //! formulaire dans vue (twig)
+            'form' => $form->createView(), 
         ]);
     }
 
@@ -111,26 +96,8 @@ class ChambreController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $imageFile = $form->get('image')->getData();
 
-            
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $this->slugger->slug($originalFilename);
-
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        $this->getParameter('img_upload'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-
-                }
-                $chambre->setImage($newFilename);
-
-            }
+            $this->imageUpload->ImageUpload($form, $chambre);
 
             $em->flush();
 
@@ -152,7 +119,7 @@ class ChambreController extends AbstractController
     #[Route('/{id}/delete', name: 'chambre_delete', methods: ['GET'])]
     public function delete(Chambre $chambre, EntityManagerInterface $em): Response
     {
-        $em->remove($chambre); //* Suppression de la chambre
+        $em->remove($chambre); //! Suppression de la chambre
         $em->flush();
 
         $this->addFlash(
