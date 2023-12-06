@@ -6,23 +6,22 @@
 <div class="collapse" id="collapseExample">
 	<h5 class="col-4">{{ chambre.prixJournalier }}&euro; /Nuit</h5>
 	<div class="col-6">
-		{{ form_start(formChambre) }}
-        {{ form_errors(formChambre) }}
+		{{ form_start(formReservation) }}
+		{{ form_errors(formReservation) }}
 
 		<div class="col-4">
-		{{ form_row(formChambre.checkingAt) }}
+			{{ form_row(formReservation.checkingAt) }}
 		</div>
 		<div class="col-4">
-		{{ form_row(formChambre.checkoutAt) }}
+			{{ form_row(formReservation.checkoutAt) }}
 		</div>
-		{{ form_row(formChambre.nom) }}
-		{{ form_row(formChambre.prenom) }}
-		{# {{ form_label(formChambre.personneNumber, 'Nombre de personne') }}
-		{{ form_widget(formChambre.personneNumber) }} #}
-		{{ form_row(formChambre.personneNumber) }}
-		{{ form_row(formChambre.email) }}
-		{{ form_row(formChambre.phone) }}
+		{{ form_row(formReservation.nom) }}
+		{{ form_row(formReservation.prenom) }}
+		{{ form_row(formReservation.personneNumber) }}
+		{{ form_row(formReservation.email) }}
+		{{ form_row(formReservation.phone) }}
 		<button type="submit" class="btn btn-primary my-4">Reservez</button>
-		{{ form_end(formChambre) }}
+
+		{{ form_end(formReservation) }}
 	</div>
 </div>
