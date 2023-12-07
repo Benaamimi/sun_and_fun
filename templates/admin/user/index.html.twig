@@ -6,7 +6,6 @@
 {% block body %}
 	<div class="container mt-4">
 		<h1 class="mt-4">Liste des utilisateurs</h1>
-		<a href="{{ path('admin_user_create') }}" class="btn btn-primary">Ajouter un utilisateur +</a>
 		<table class="table table-hover mt-4">
 			<thead>
 				<tr>
@@ -47,6 +46,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<a href="{{ path('admin_user_create') }}" class="btn btn-outline-primary mt-4">Ajouter un utilisateur <i class="fa fa-user-plus ms-2"></i></a>
 	</div>
 {% endblock %}
 

@@ -1,18 +1,41 @@
 <nav class="navbar bg-body-tertiary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('home') }}"><i class="fa fa-home me-2"></i>Retour à la page d'accueil</a>
+		<a class="navbar-brand" href="{{ path('home') }}">
+			<i class="fa fa-home me-2"></i>Retour au site</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 			<div class="offcanvas-header">
-				<h5 class="offcanvas-title" id="offcanvasNavbarLabel"><i class="fa fa-user me-2"></i>{{ app.user.email }}</h5>
+				<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+					<i class="fa fa-user me-2"></i>
+					{{ app.user.email }}</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 			<div class="offcanvas-body">
 				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{ path('admin_home_index') }}">Tableau de bord</a>
+						<a class="nav-link" aria-current="page" href="{{ path('admin_home_index') }}">
+							<i class="fa fa-dashboard me-2"></i>Dashboard</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('home') }}">
+							<i class="fa fa-home me-2"></i>
+							retour au site</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa fa-ticket me-2"></i>
+							gestion des reservations
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_reservation_index') }}">Liste des reservations</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('admin_reservation_create') }}">Ajouter une reservations</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,25 +68,8 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fa fa-bell me-2"></i>
-							gestion des reservations
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a class="dropdown-item" href="{{ path('admin_reservation_index') }}">Liste des reservations</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('admin_reservation_create') }}">Ajouter une reservations</a>
-							</li>
-						</ul>
-					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('home') }}"><i class="fa fa-home me-2"></i> retour au site</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-danger" href="{{ path('app_logout') }}">déconnexion</a>
+						<a class="nav-link text-danger" href="{{ path('app_logout') }}"><i class="fa fa-sign-out me-2" aria-hidden="true"></i>déconnexion</a>
 					</li>
 				</ul>
 			</div>

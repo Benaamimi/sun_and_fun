@@ -5,44 +5,69 @@
 
 {% block body %}
 
-	<div class="position-relative">
-		<img class="card-img" src="{{ asset("/uploads/" ~ chambre.image) }}"></img>
-	<div class="position-absolute top-50 start-50 translate-middle text-center">
-		<h1 class="text-light fw-bold">Chambre "{{ chambre.titre }}"</h1>
-	</div>
-</div>
-
-<div class="container mt-4">
-
-	<div class="row">
-		<div class="col">
-			<img src="{{asset('img/bath.jpg')}}" alt="" width="600">
+	{# <div class="position-relative">
+			<img class="card-img" src="{{ asset("/uploads/" ~ chambre.image)|imagine_filter('full_size') }}"></img>
+		<div class="position-absolute top-50 start-50 translate-middle text-center">
+			<h1 class="text-light fw-bold">Chambre "{{ chambre.titre }}"</h1>
 		</div>
-		<div class="col">
-			<img src="{{asset('img/shower.jpg')}}" alt="" width="600">
+	</div> #}
+
+
+
+	<div class="container mt-5">
+	<h1 class="text-primary fw-bold">Chambre "{{ chambre.titre }}"</h1>
+	<hr>
+
+		<div class="row">
+			<div class="col">
+				<img src="{{ asset("/uploads/" ~ chambre.image)|imagine_filter('small_size') }}" alt="{{ chambre.titre }}" width="600">
+			</div>
+			<div class="col">
+				<img src="{{asset('img/bathroom.jpg')|imagine_filter('small_size')}}" alt="" width="600">
+			</div>
 		</div>
+
+		<div class="mt-4">
+			<h3>Description</h3>
+			<p class="col-4">{{ chambre.description }}</p>
+		</div>
+
+
+		<div class="mt-4">
+			<h3>Ce que propose cette chambre</h3>
+			<div class="col-md-6">
+				<ul class="list-unstyled text-muted">
+					<li class="mb-2">
+						<i class="fa fa-wifi text-secondary w-1rem me-3 text-center"></i>
+						<span class="text-sm">Wifi</span>
+					</li>
+					<li class="mb-2">
+						<i class="fa fa-tv text-secondary w-1rem me-3 text-center"></i>
+						<span class="text-sm">Télévision</span>
+					</li>
+					<li class="mb-2">
+						<i class="fa fa-snowflake text-secondary w-1rem me-3 text-center"></i>
+						<span class="text-sm">Air conditionné</span>
+					</li>
+					<li class="mb-2">
+						<i class="fa fa-thermometer-three-quarters text-secondary w-1rem me-3 text-center"></i>
+						<span class="text-sm">Chauffage</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<h3>Tarif</h3>
+			<h5>{{ chambre.prixJournalier }}&euro; /Nuit</h5>
+		</div>
+
+		<div class="mt-4">
+
+			{% include "front/chambre/_form_reservation.html.twig" %}
+
+		</div>
+
+
 	</div>
-
-	<div class="mt-4">
-		<h3>Description</h3>
-		<p class="col-4">{{ chambre.description }}</p>
-	</div>
-
-
-	<div class="mt-4">
-		<h3>Ce que propose cette chambre</h3>
-		<p class="col-4">{{ chambre.description }}</p>
-	</div>
-
-	<div class="mt-4">
-		<h3>Tarif</h3>
-	</div>
-
-	<div class="mt-4">
-
-		{% include "front/chambre/_form_reservation.html.twig" %}
-
-	</div>
-
-
-</div>{% endblock %}
+{% endblock %}
