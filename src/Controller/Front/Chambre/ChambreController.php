@@ -44,12 +44,18 @@ class ChambreController extends AbstractController
     {
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
+
+        if(!$chambre){
+            $this->addFlash('warning', 'Veuillez reservez une autre chambre');
+        }
+        elseif(!$reservation){
+            $this->addFlash('warning', 'Veuillez refaire la reservation');
+        }
         
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => false]);
         $form->handleRequest($request);
 
 
-        
         if ($form->isSubmitted() && $form->isValid()) {
            
             //! Reservation de chambre avec injection de dependance
@@ -70,7 +76,6 @@ class ChambreController extends AbstractController
             // //! Créer une session Stripe
             Stripe::setApiKey($_ENV['STRIPE_PRIVATE_KEY_TEST']);
             
-            // $resStripe = [];
       
             $resStripe[] = [
                 'price_data' => [
@@ -82,7 +87,6 @@ class ChambreController extends AbstractController
                 ],
                 'quantity' => 1
             ];
-            // dd($reservation);
 
             $checkout_session = Session::create([
                 'customer_email' => $reservation->getEmail(), 

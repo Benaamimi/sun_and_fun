@@ -1,0 +1,22 @@
+{% extends "admin/base.html.twig" %}
+
+
+{% block body %}
+	<div class="mt-4">
+		{% for comment in comments %}
+			<div class="col-md-4 container">
+				<div
+					class="card border-primary mb-3 rounded shadow-lg my-4" style="max-width: 20rem;">
+					{# <div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image)|imagine_filter('card_size') }}" alt="{{ chambre.titre }}" class="img-fluid"></div> #}
+					<div class="card-body">
+						<h4 class="card-title text-center">{{comment.nomComplet}}</h4>
+						<p class="card-text text-center">{{ comment.contenu|u.truncate(150, '...', false)}}...
+						</p>
+						<a href="{{path('admin_comment_show', {id: comment.id})}}" class="btn btn-outline-primary btn-sm">Détails</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}

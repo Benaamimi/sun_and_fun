@@ -1,0 +1,29 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+	Commentaires
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="text-block mt-4">
+					<h1>{{ comment.nomComplet }}</h2>
+					</h1>
+					<p class="text-muted fw-light">{{ comment.contenu }}</p>
+				</div>
+			</div>
+		</div>
+
+		{% include "admin/comment/_publier.html.twig" %}
+        
+		<a class="btn btn-sm btn-danger mt-4" href="{{ path('admin_chambre_delete', { 'id' : comment.id }) }}">
+			<i class="fas fa-trash me-2"></i>
+			Supprimer
+		</a>
+		
+	</div>
+
+
+{% endblock %}

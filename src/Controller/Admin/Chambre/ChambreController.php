@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/chambre', name: 'admin_')]
 class ChambreController extends AbstractController
@@ -39,14 +37,11 @@ class ChambreController extends AbstractController
     {
         $chambre = new Chambre;
 
+        //! création du formulaire a partir de la class Chambre avec le ChambreType::class
         $form = $this->createForm(ChambreType::class, $chambre);
-        //? création du formulaire a partir de la class Chambre avec le ChambreType::class
-        
         
         $form->handleRequest($request);
 
-        
-        
         if ($form->isSubmitted() && $form->isValid()) {
         
             //! image upload avec injection de dependance

@@ -2,34 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Chambre;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ChambreDisponibleType extends AbstractType
+class CommentPublishedType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('isDisponible', ChoiceType::class, [
-            'choices' => [
-                'Disponible' => true,  
-                'En attente' => false
-            ],
-            'label' => 'Disponibilité',
-            'expanded' => true,
-            'multiple' => false,
-            'data' => true
-        ])
+            ->add('isPublished', CheckboxType::class, [
+                'label' => 'Publié',
+                'required' => false
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Chambre::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

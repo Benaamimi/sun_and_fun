@@ -13,7 +13,7 @@
 		<div class="row">
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.444579934458!2d2.2976546760571996!3d48.868800799974444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fe821564155%3A0x5d4e0a052a9108ef!2s31%20Av.%20George%20V%2C%2075008%20Paris!5e0!3m2!1sfr!2sfr!4v1694296529242!5m2!1sfr!2sfr" width="50%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="my-4 col-6"></iframe>
 			<div class="w-50 p-5 col-6 mx-auto my-4">
-
+			<h3 class="mb-4">Votre avis compte</h3>
 				{# {{form_start(formContact)}}
 
 				{{form_row(formContact.nomComplet)}}
@@ -23,6 +23,8 @@
 					<button type="submit" class="btn btn-primary my-4">Envoyez</button>
 				</div>
 				{{form_end(formContact)}} #}
+
+				{{ form(form) }}
 			</div>
 		</div>
 

@@ -32,7 +32,6 @@ class ChambreType extends AbstractType
                     'placeholder' => 'Description de la chambre'
                 ],
                 'required' => false,
-                'required' => false,
             ])
             ->add('prixJournalier', MoneyType::class, [
                 'label' => 'Prix par nuit',
