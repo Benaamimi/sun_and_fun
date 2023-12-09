@@ -23,7 +23,7 @@
 			</ul>
 			{#? si l'utilisateur est bien connecté #}
 			{#? le backoffice s'affiche que si connecté autant que role_admin #}
-			{% if is_granted("ROLE_USER") and app.user %}
+			{% if is_granted("ROLE_USER") %}
 				<div class="btn-group">
 					<a
 						type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

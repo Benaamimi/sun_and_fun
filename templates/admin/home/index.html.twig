@@ -7,17 +7,29 @@
 	<div class="container mt-4">
 
 		<h1 class="fw-bold  text-center">Bonjour "{{ app.user.nom }}" !</h1>
-		<h2 class="fw-light text-center">Bienvenue dans la plateforme de gestion des tâches.</h2>
+		<h2 class="fw-light text-center">Vous êtes connecté dans la plateforme de gestion des tâches.</h2>
 
 		<div class="mt-5">
+
 			<div class="mt-4 text-center">
-				<a href="{{ path('admin_reservation_index') }}" class="btn btn-outline-primary"><i class="fa fa-ticket me-2"></i>Gestion des réservations</a>
+				<a href="{{ path('admin_reservation_index') }}" class="btn btn-outline-primary">
+					<i class="fa fa-ticket me-2"></i>Gestion des réservations</a>
+			</div>
+
+			{% if is_granted("ROLE_ADMIN")  %}
+				<div class="mt-4 text-center">
+					<a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary">
+						<i class="fa fa-user me-2"></i>Gestion des utilisateurs</a>
+				</div>
+			{% endif %}
+
+			<div class="mt-4 text-center">
+				<a href="{{ path('admin_chambre_index') }}" class="btn btn-outline-primary">
+					<i class="fa fa-bed me-2"></i>Gestion des Chambres</a>
 			</div>
 			<div class="mt-4 text-center">
-				<a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary"><i class="fa fa-user me-2"></i>Gestion des utilisateurs</a>
-			</div>
-			<div class="mt-4 text-center">
-				<a href="{{ path('admin_chambre_index') }}" class="btn btn-outline-primary"><i class="fa fa-bed me-2"></i>Gestion des Chambres</a>
+				<a href="{{ path('admin_comment_index') }}" class="btn btn-outline-primary">
+					<i class="fa fa-bed me-2"></i>Gestion des Avis</a>
 			</div>
 		</div>
 
