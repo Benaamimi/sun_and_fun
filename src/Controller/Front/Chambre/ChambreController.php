@@ -10,7 +10,6 @@ use App\Form\ReservationType;
 use App\Service\MailerService;
 use App\Service\ReservationService;
 use App\Repository\ChambreRepository;
-use App\Service\PaymentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +58,22 @@ class ChambreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
            
             //! Reservation de chambre avec injection de dependance
-            $reservationService->reservationUser($reservation, $chambre);
+            $checking = $reservation->getCheckingAt();
+            $reservation->setChambre($chambre); 
+            if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
+                $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
+                if ($reservation->getId())
+                    return $this->redirectToRoute('chambre_index', [
+                        'id' => $reservation->getId()
+                    ]);
+                else
+                    return $this->redirectToRoute('chambre_index');
+            }
+            $days = $checking->diff($reservation->getCheckoutAt())->days;
+            $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
+            $reservation->setPrixTotal($prixTotal);
+
+            // $reservationService->reservationUser($reservation, $chambre);
 
             $em->persist($reservation);
             $em->flush();
@@ -104,7 +118,7 @@ class ChambreController extends AbstractController
             return new RedirectResponse($checkout_session->url);
 
 
-            return $this->redirectToRoute('chambre_index');
+            // return $this->redirectToRoute('chambre_index');
 
         }
 

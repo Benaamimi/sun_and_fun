@@ -2,10 +2,18 @@
 
 namespace App\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReservationService extends AbstractController
 {
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function reservationAdmin($reservation)
     {
         $checking = $reservation->getCheckingAt();
@@ -43,6 +51,10 @@ class ReservationService extends AbstractController
             $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
 
             $reservation->setPrixTotal($prixTotal);
+
+            $this->em->persist($reservation);
+            $this->em->flush();
+            
             
     }
 }
