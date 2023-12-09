@@ -3,7 +3,9 @@
 namespace App\Controller\Front\Page;
 
 use App\Entity\Comment;
+use App\Entity\Contact;
 use App\Form\CommentType;
+use App\Form\ContactType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +24,9 @@ class PageController extends AbstractController
     public function contact(Request $request, EntityManagerInterface $em): Response
     {
 
-        $comment = new Comment;
+        $contact = new Contact;
 
-        $form = $this->createForm(CommentType::class, $comment);
+        $form = $this->createForm(ContactType::class, $contact);
 
         $form->handleRequest($request);
 
@@ -32,11 +34,11 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
         
 
-            $em->persist($comment);
+            $em->persist($contact);
             $em->flush();
 
 
-            $this->addFlash("success", "Merci! Votre avis est pris en compte.");
+            $this->addFlash("success", "Merci! Votre message est pris en compte.");
 
             return $this->redirectToRoute('page_contact');
         }

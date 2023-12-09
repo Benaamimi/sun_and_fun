@@ -1,7 +1,7 @@
 {% extends "admin/base.html.twig" %}
 
 {% block title %}
-	Commentaires
+	Contact
 {% endblock %}
 
 {% block body %}
@@ -9,14 +9,11 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="text-block mt-4">
-					<p class="fst-italic">{{ comment.nomComplet }}</p>
-					<p class="fs-2">{{ comment.contenu }}</p>
+					<p class="fst-italic">{{ contact.email }}</p>
+					<p class="fs-2">{{ contact.contenu }}</p>
 				</div>
 			</div>
-		</div>
-
-		{% include "admin/comment/_publier.html.twig" %}
-		
+		</div>		
 	</div>
 
 

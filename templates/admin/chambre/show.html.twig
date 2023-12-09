@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="col-lg-8 col-6 mb-2">
-					<img class="img_fluide" src="{{ asset("/uploads/" ~ chambre.image) }}" alt="Image de {{ chambre.titre }}" width="500">
+					<img class="img_fluide" src="{{ asset("/uploads/" ~ chambre.image)|imagine_filter('small_size') }}" alt="Image de {{ chambre.titre }}" width="500">
 				</div>
 				<div class="text-block mt-4">
 					<h1>{{ chambre.titre }} - {{ chambre.prixJournalier }}€ /Nuit</h2>

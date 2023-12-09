@@ -1,0 +1,38 @@
+{% extends "admin/base.html.twig" %}
+
+
+{% block body %}
+
+	<section class="container mt-4">
+		<h1 class="mt-5">Gestion des commentaires</h1>
+		<hr>
+		<table class="table table-hover mt-4">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Email</th>
+					<th scope="col">Message</th>
+					<th scope="col" colspan="3">Date d'ajout</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for contact in contacts %}
+					<tr class="table-light">
+						<th scope="row">{{ contact.id }}</th>
+						<td>{{ contact.email }}</td>
+						<td>{{ contact.contenu }}</td>
+						<td>{{ contact.createdAt|date("d/m/Y H:i") }}</td>
+						<td>
+							<a href="{{ path('admin_contact_show', {'id': contact.id }) }}" class="text-info"><i class="fas fa-eye"></i></a>
+						</td>
+						<td>
+							<a href="{{ path('admin_contact_delete', { 'id' : contact.id }) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</section>
+
+
+{% endblock %}
