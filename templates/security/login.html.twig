@@ -4,10 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<div class="w-50 p-5 rounded mx-auto my-4 shadow-lg">
+	<section class="w-50 p-5 rounded mx-auto my-4 shadow-lg mt-5">
 		<div class="row">
 			<div class="col">
-				<img class="img_fluide me-2" src="{{asset('img/apropo.jpg')}}" alt="" width="400">
+				<img class="img_fluide me-2" src="{{asset('img/login.jpg')}}" alt="" width="400">
 			</div>
 
 			<div class="col">
@@ -37,9 +37,7 @@
 					</button>
 				</form>
 			</div>
-			<p class="mt-4 text-center">Vous pouvez vous inscrire en cliquant
-				<a href="{{path('app_inscription')}}" class="text-success">ici</a>
-			</p>
 		</div>
-	</div>
+	</section>
+	
 {% endblock %}

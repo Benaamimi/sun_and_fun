@@ -23,7 +23,17 @@
 							<i class="fa fa-home me-2"></i>
 							retour au site</a>
 					</li>
-					<li class="nav-item dropdown">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('admin_reservation_index') }}">
+							<i class="fa fa-ticket me-2"></i>
+							Gestion des réservation</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('admin_comment_index') }}">
+							<i class="fa fa-comment me-2"></i>
+							gestion des commentaires</a>
+					</li>
+					{# <li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="fa fa-ticket me-2"></i>
 							gestion des reservations
@@ -36,7 +46,7 @@
 								<a class="dropdown-item" href="{{ path('admin_reservation_create') }}">Ajouter une reservations</a>
 							</li>
 						</ul>
-					</li>
+					</li> #}
 					{% if is_granted("ROLE_ADMIN")  %}
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

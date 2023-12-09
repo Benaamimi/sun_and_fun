@@ -2,21 +2,39 @@
 
 
 {% block body %}
-	<div class="mt-4">
-		{% for comment in comments %}
-			<div class="col-md-4 container">
-				<div
-					class="card border-primary mb-3 rounded shadow-lg my-4" style="max-width: 20rem;">
-					{# <div class="card-header"><img src="{{ asset("/uploads/" ~ chambre.image)|imagine_filter('card_size') }}" alt="{{ chambre.titre }}" class="img-fluid"></div> #}
-					<div class="card-body">
-						<h4 class="card-title text-center">{{comment.nomComplet}}</h4>
-						<p class="card-text text-center">{{ comment.contenu|u.truncate(150, '...', false)}}...
-						</p>
-						<a href="{{path('admin_comment_show', {id: comment.id})}}" class="btn btn-outline-primary btn-sm">Détails</a>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-	</div>
+
+	<section class="container mt-4">
+		<h1 class="mt-5">Gestion des commentaires</h1>
+		<hr>
+		<table class="table table-hover mt-4">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nom complet</th>
+					<th scope="col">Commentaire</th>
+					<th scope="col">Publication</th>
+					<th scope="col" colspan="3">Date d'ajout</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for comment in comments %}
+					<tr class="table-light">
+						<th scope="row">{{ comment.id }}</th>
+						<td>{{ comment.nomComplet }}</td>
+						<td>{{ comment.contenu }}</td>
+						<td>{{ comment.isPublished ? 'Publié':'En attente' }}</td>
+						<td>{{ comment.createdAt|date("d/m/Y H:i") }}</td>
+						<td>
+							<a href="{{ path('admin_comment_show', {'id': comment.id }) }}" class="text-info"><i class="fas fa-eye"></i></a>
+						</td>
+						<td>
+							<a href="{{ path('admin_chambre_delete', { 'id' : comment.id }) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</section>
+
 
 {% endblock %}
