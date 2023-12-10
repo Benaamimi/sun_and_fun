@@ -18,7 +18,7 @@ class MailerService
 
     public function sendMailToUser(string $userEmail, $reservation)
     {
-         //! envoie de mail Utilisateur
+         //! envoie de mail à l'utilisateur
          $email = (new TemplatedEmail())
          ->from('sunandfun.noreply@gmail.com')
          ->to($userEmail)
@@ -31,9 +31,9 @@ class MailerService
          $this->mailer->send($email);
     }
 
-    public function sendMailToAdmin(string $adminEmail = 'sunandfun.chambre@gmail.com', $reservation)
+    public function sendMailToAdmin(string $adminEmail, $reservation)
     {
-        //! Admin
+        //! envoie un mail à l'admin
         $email = (new TemplatedEmail())
         ->from('sunandfun.noreply@gmail.com')
         ->to($adminEmail)

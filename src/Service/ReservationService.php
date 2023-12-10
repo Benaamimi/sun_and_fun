@@ -7,13 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReservationService extends AbstractController
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
-
     public function reservationAdmin($reservation)
     {
         $checking = $reservation->getCheckingAt();
@@ -33,28 +26,24 @@ class ReservationService extends AbstractController
             $reservation->setPrixTotal($prixTotal);
     }
 
-    public function reservationUser($reservation, $chambre)
-    {
-        $checking = $reservation->getCheckingAt();
-            $reservation->setChambre($chambre); 
-            if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
-                $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
-                if ($reservation->getId())
-                    return $this->redirectToRoute('chambre_index', [
-                        'id' => $reservation->getId()
-                    ]);
-                else
-                    return $this->redirectToRoute('chambre_index');
-            }
+    // public function reservationUser($reservation, $chambre)
+    // {
+    //     $checking = $reservation->getCheckingAt();
+    //         $reservation->setChambre($chambre); 
+    //         if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
+    //             $this->addFlash('danger', 'Une période de temps ne peut pas être négative.');
+    //             if ($reservation->getId())
+    //                 return $this->redirectToRoute('chambre_index', [
+    //                     'id' => $reservation->getId()
+    //                 ]);
+    //             else
+    //                 return $this->redirectToRoute('chambre_index');
+    //         }
 
-            $days = $checking->diff($reservation->getCheckoutAt())->days;
-            $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
+    //         $days = $checking->diff($reservation->getCheckoutAt())->days;
+    //         $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
 
-            $reservation->setPrixTotal($prixTotal);
+    //         $reservation->setPrixTotal($prixTotal);
 
-            $this->em->persist($reservation);
-            $this->em->flush();
-            
-            
-    }
+    // }
 }

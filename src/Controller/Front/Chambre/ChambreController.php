@@ -8,7 +8,6 @@ use App\Entity\Reservation;
 use Stripe\Checkout\Session;
 use App\Form\ReservationType;
 use App\Service\MailerService;
-use App\Service\ReservationService;
 use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +38,12 @@ class ChambreController extends AbstractController
     }
 
     #[Route('/chambre/detail/{id}', name: 'chambre_show', methods: ['GET', 'POST'])]
-    public function show(Chambre $id, Request $request, ChambreRepository $chambreRepository, EntityManagerInterface $em, MailerService $mailerService, ReservationService $reservationService): Response
+    public function show(Chambre $id, 
+                    Request $request, 
+                    ChambreRepository $chambreRepository, 
+                    EntityManagerInterface $em, 
+                    MailerService $mailerService, 
+                ): Response
     {
         $reservation = new Reservation;
         $chambre = $chambreRepository->find($id);
@@ -73,12 +77,10 @@ class ChambreController extends AbstractController
             $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
             $reservation->setPrixTotal($prixTotal);
 
-            // $reservationService->reservationUser($reservation, $chambre);
-
+            //! actualiser en base de données
             $em->persist($reservation);
             $em->flush();
             
-          
 
             //! envoie de mail Utilisateur
             $mailerService->sendMailToUser($reservation->getEmail(), $reservation);
@@ -89,8 +91,7 @@ class ChambreController extends AbstractController
 
             // //! Créer une session Stripe
             Stripe::setApiKey($_ENV['STRIPE_PRIVATE_KEY_TEST']);
-            
-      
+
             $resStripe[] = [
                 'price_data' => [
                     'currency' => 'eur',
@@ -113,12 +114,7 @@ class ChambreController extends AbstractController
                 'cancel_url' => $this->generator->generate('payment_error', [], UrlGeneratorInterface::ABSOLUTE_URL)
             ]);
             
-            $this->addFlash('success', 'Merci pour votre reservation! Vous avez reçu un email de confirmation.');
-
             return new RedirectResponse($checkout_session->url);
-
-
-            // return $this->redirectToRoute('chambre_index');
 
         }
 
@@ -131,7 +127,7 @@ class ChambreController extends AbstractController
     #[Route('/payment/success', name: 'payment_success')]
     public function stripeSuccess() :Response
     {
-        
+        $this->addFlash('success', 'Merci pour votre reservation! Vous avez reçu un email de confirmation.');
         return $this->redirectToRoute('chambre_index');
     }
 

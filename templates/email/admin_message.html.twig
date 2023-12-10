@@ -17,6 +17,8 @@
 	<div class="text-block mt-4">
 		<h2 class="mt-4 text-success">Détail de la réservation:</h2>
 		<div class="mt-4">
+			<h4 class="fw-light">Chambre:
+				{{ reservation.chambre.titre }}</h4>
 			<h4 class="fw-light">Date d'arrivée:
 				{{ reservation.checkingAt|date('d/m/Y H:i') }}</h4>
 			<h4 class="fw-light">Date de départ:

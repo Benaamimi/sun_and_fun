@@ -18,22 +18,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReservationController extends AbstractController
 {
     private $reservationService;
+    private $mailerService;
+    private $em;
 
-    public function __construct(ReservationService $reservationService)
+    public function __construct(ReservationService $reservationService, 
+                                MailerService $mailerService, 
+                                EntityManagerInterface $em
+                            )
     {  
         $this->reservationService = $reservationService;
+        $this->mailerService = $mailerService;
+        $this->em = $em;
     }
 
     #[Route('/', name: 'reservation_index')]
     public function index(ReservationRepository $reservationRepository): Response
     {
         return $this->render('admin/reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll()
+            'reservations' => $reservationRepository->findby([], ['createdAt' => 'DESC'])
         ]);
     }
 
     #[Route('/create', name: 'reservation_create', methods: ['GET', 'POST'])]
-    public function create(Reservation $reservation = null, Request $request, EntityManagerInterface $em, MailerService $mailerService): Response
+    public function create(Reservation $reservation = null, Request $request): Response
     {
         if(!$reservation){
             $reservation = new Reservation;
@@ -48,14 +55,14 @@ class ReservationController extends AbstractController
             //! Reservation de chambre avec injection de dependance
             $this->reservationService->reservationAdmin($reservation);
 
-            $em->persist($reservation);
-            $em->flush();
+            $this->em->persist($reservation);
+            $this->em->flush();
 
             //! envoie de mail Utilisateur
-            $mailerService->sendMailToUser($reservation->getEmail(), $reservation);
+            $this->mailerService->sendMailToUser($reservation->getEmail(), $reservation);
 
              //! envoie de mail Admin
-             $mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
+             $this->mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
 
             $this->addFlash('success', 'La reservation a bien été confirmer!');
             return $this->redirectToRoute('admin_reservation_index');
@@ -77,7 +84,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'reservation_edit', methods: ['GET', 'POST'])]
-    public function edit(Reservation $reservation, Request $request, EntityManagerInterface $em): Response
+    public function edit(Reservation $reservation, Request $request): Response
     {
 
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -87,9 +94,13 @@ class ReservationController extends AbstractController
 
             $this->reservationService->reservationAdmin($reservation);
 
-            $em->flush();
+            $this->em->flush();
+            
+            $this->mailerService->sendMailToUser($reservation->getEmail(), $reservation);
 
-            $this->addFlash('success', 'La reservation a bien été modifier!');
+            $this->mailerService->sendMailToAdmin('sunandfun.chambre@gmail.com', $reservation);
+
+            $this->addFlash('success', 'La reservation a bien été modifier, un email a été envoyer.');
 
             return $this->redirectToRoute('admin_reservation_index');
 
@@ -102,15 +113,12 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'reservation_delete', methods: ['GET'])]
-    public function delete(Reservation $reservation, EntityManagerInterface $em): Response
+    public function delete(Reservation $reservation): Response
     {
-        $em->remove($reservation);
-        $em->flush();
+        $this->em->remove($reservation);
+        $this->em->flush();
 
-        $this->addFlash(
-            'warning',
-            'La reservation a bien été supprimer!'
-        );
+        $this->addFlash('warning', 'La reservation a bien été supprimer!');
                
         return $this->redirectToRoute('admin_reservation_index');
     }

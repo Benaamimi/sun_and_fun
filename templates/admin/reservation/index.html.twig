@@ -30,16 +30,21 @@
 						<td>{{ reservation.checkoutAt|date('d/m/Y H:i') }}</td>
 						<td>{{ reservation.nom }}</td>
 						<td>{{ reservation.email }}</td>
-						<td>{{ reservation.createdAt|date("d/m/Y H:i") }}</td>
+						<td>{{ reservation.createdAt|date("d/m/Y à H:i") }}</td>
 						<td>
-							<a href="{{ path('admin_reservation_show', {'id': reservation.id }) }}" class="text-info"><i class="fas fa-eye"></i></a>
+							<a href="{{ path('admin_reservation_show', {'id': reservation.id }) }}" class="text-info">
+								<i class="fas fa-eye"></i>
+							</a>
 						</td>
 						<td>
-							<a href="{{ path('admin_reservation_delete', { 'id' : reservation.id }) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+							<a href="{{ path('admin_reservation_delete', { 'id' : reservation.id }) }}" class="text-danger">
+								<i class="fas fa-trash"></i>
+							</a>
 						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<a href="{{ path('admin_reservation_create') }}" class="btn btn-outline-primary mt-4">Ajouter une réservation</a>
 	</div>
 {% endblock %}
