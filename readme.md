@@ -23,8 +23,16 @@ symfony new nom_du_projet --version="6.3.*"
 composer require webapp
 ```
 
-## Création de fonction twig
+### Création de filtre twig
 
 ```bash
  symfony console make:twig-extension
+ composer require liip/imagine-bundle
+```
+
+### Envoie de mail
+
+```bash
+ composer require symfony/mailer
+ composer require symfony/brevo-mailer
 ```
