@@ -26,7 +26,7 @@
 
 			{% if chambres is empty %}
 
-				<p class="text-center">Aucune chambre n'est disponible actuellement.</p>
+				<p class="text-center">Aucune chambre n'est disponible actuellement, <a href="{{path('page_contact')}}" class="text-success">contactez-nous</a> pour plus d'information.</p>
 
 			{% else %}
 
@@ -40,6 +40,5 @@
 
 		</div>
 	</div>
-
 
 {% endblock %}

@@ -48,4 +48,10 @@ class PageController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/mention-legal', name: 'page_mention_legal')]
+    public function mentionlegal(): Response
+    {
+        return $this->render('front/page/mentionlegal.html.twig');
+    }
 }
