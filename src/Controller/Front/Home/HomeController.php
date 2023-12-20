@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request, EntityManagerInterface $em, CommentRepository $commentRepository): Response
     {
-        $comments = $commentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC']);
+        $comments = $commentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC'], 6);
 
         $comment = new Comment;
 

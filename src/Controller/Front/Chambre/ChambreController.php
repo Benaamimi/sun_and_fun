@@ -96,7 +96,7 @@ class ChambreController extends AbstractController
                 'price_data' => [
                     'currency' => 'eur',
                     'product_data' => [
-                        'name' => $reservation->getChambre()->getTitre(),
+                        'name' => $reservation->getChambre()->getTitre(),                                       
                     ],
                     'unit_amount' => $reservation->getPrixTotal() * 100,
                 ],
@@ -134,7 +134,7 @@ class ChambreController extends AbstractController
     #[Route('/payment/error', name: 'payment_error')]
     public function stripeError() :Response
     {
-        $this->addFlash('Danger', 'Payement non effectuer, veuillez réessayer !');
+        $this->addFlash('danger', 'Payement non effectuer, veuillez réessayer !');
         return $this->redirectToRoute('chambre_index');
     }
 }

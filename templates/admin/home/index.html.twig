@@ -6,34 +6,34 @@
 {% block body %}
 	<div class="container mt-4">
 
-		<h1 class="fw-bold  text-center">Bonjour "{{ app.user.nom }}" !</h1>
-		<h2 class="fw-light text-center">Vous êtes connecté dans la plateforme de gestion des tâches.</h2>
+		<h1 class="fw-bold">Bonjour "{{ app.user.nom }}" !</h1>
+		<h3 class="fw-light">Vous êtes connecté dans la plateforme de gestion des tâches.</h3>
 
 		<div class="mt-5">
 
-			<div class="mt-4 text-center">
-				<a href="{{ path('admin_reservation_index') }}" class="btn btn-outline-primary">
-					<i class="fa fa-ticket me-2"></i>Gestion des réservations</a>
+			<div class="mt-4">
+				<a href="{{ path('admin_reservation_index') }}" class="text-decoration-none">
+					<h5><i class="fa fa-ticket me-2"></i>Gestion des réservations</a></h5>
 			</div>
 
 			{% if is_granted("ROLE_ADMIN")  %}
-				<div class="mt-4 text-center">
-					<a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary">
-						<i class="fa fa-user me-2"></i>Gestion des utilisateurs</a>
+				<div class="mt-4">
+					<a href="{{ path('admin_user_index') }}" class="text-decoration-none" class="text-decoration-none">
+						<h5><i class="fa fa-user me-2"></i>Gestion des utilisateurs</a></h5>
 				</div>
 			{% endif %}
 
-			<div class="mt-4 text-center">
-				<a href="{{ path('admin_chambre_index') }}" class="btn btn-outline-primary">
-					<i class="fa fa-bed me-2"></i>Gestion des Chambres</a>
+			<div class="mt-4">
+				<a href="{{ path('admin_chambre_index') }}" class="text-decoration-none">
+					<h5><i class="fa fa-bed me-2"></i>Gestion des Chambres</a></h5>
 			</div>
-			<div class="mt-4 text-center">
-				<a href="{{ path('admin_comment_index') }}" class="btn btn-outline-primary">
-					<i class="fa fa-comment me-2"></i>Gestion des Avis</a>
+			<div class="mt-4">
+				<a href="{{ path('admin_comment_index') }}" class="text-decoration-none">
+					<h5><i class="fa fa-comment me-2"></i>Gestion des Avis</a></h5>
 			</div>
-			<div class="mt-4 text-center">
-				<a href="{{ path('admin_contact_index') }}" class="btn btn-outline-primary">
-					<i class="fa fa-comment me-2"></i>Gestion des messages</a>
+			<div class="mt-4">
+				<a href="{{ path('admin_contact_index') }}" class="text-decoration-none">
+					<h5><i class="fa fa-comment me-2"></i>Gestion des messages</a></h5>
 			</div>
 		</div>
 

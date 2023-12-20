@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Contact;
 use App\Form\CommentType;
 use App\Form\ContactType;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,6 @@ class PageController extends AbstractController
 
             $em->persist($contact);
             $em->flush();
-
 
             $this->addFlash("success", "Merci! Votre message est pris en compte.");
 

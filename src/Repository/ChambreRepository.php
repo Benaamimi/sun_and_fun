@@ -22,27 +22,7 @@ class ChambreRepository extends ServiceEntityRepository
     }
 
 
-   public function findChambreDisponible()
-   {
-    $queryBuilder = $this->createQueryBuilder('c');
-
-    // Sélectionnez les chambres qui n'ont pas de réservations
-    $queryBuilder->leftJoin('c.reservations', 'r');
-    $queryBuilder->where($queryBuilder->expr()->isNull('r.id'));
-
-    return $queryBuilder->getQuery()->getResult();
-   }
-
-   public function findChambresDisponibles()
-   {
-       return $this->createQueryBuilder('c')
-           ->andWhere('c.isDisponible = :isDisponible')
-           ->setParameter('isDisponible', true)
-           ->getQuery()
-           ->getResult();
-   }
-
-   public function findChambresNonReservees()
+public function findChambresNonReservees()
 {
     return $this->createQueryBuilder('c')
         ->leftJoin('c.reservations', 'r')
@@ -55,6 +35,26 @@ class ChambreRepository extends ServiceEntityRepository
 }
 
 
+
+public function findChambreDisponible()
+{
+ $queryBuilder = $this->createQueryBuilder('c');
+
+ // Sélectionnez les chambres qui n'ont pas de réservations
+ $queryBuilder->leftJoin('c.reservations', 'r');
+ $queryBuilder->where($queryBuilder->expr()->isNull('r.id'));
+
+ return $queryBuilder->getQuery()->getResult();
+}
+
+public function findChambresDisponibles()
+{
+    return $this->createQueryBuilder('c')
+        ->andWhere('c.isDisponible = :isDisponible')
+        ->setParameter('isDisponible', true)
+        ->getQuery()
+        ->getResult();
+}
 
 
 //    public function findOneBySomeField($value): ?Chambre
