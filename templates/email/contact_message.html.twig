@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style>/* le style de l'email */</style>
+	<title>Message de contact</title>
+</head>
+
+<body>
+	<div></div>
+	<div class="text-block mt-4">
+		<h2>Vous avez reçu un message</h2>
+		<div class="mt-4">
+			<p>{{ contact.contenu }}</p>
+		</div>
+        <p>Message de {{ contact.email }} Le {{ contact.createdAt|date("d/m/Y à H:i") }} </p>
+	</div>
+</body></html>

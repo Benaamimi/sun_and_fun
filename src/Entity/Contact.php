@@ -6,6 +6,8 @@ use App\Repository\ContactRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
@@ -16,9 +18,11 @@ class Contact
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( message: "Veillez entrer votre email" )]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank( message: "Veillez écrire votre message" )]
     private ?string $contenu = null;
 
     #[ORM\Column]

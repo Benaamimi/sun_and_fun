@@ -30,7 +30,8 @@ class ChambreController extends AbstractController
     #[Route('/chambre', name: 'chambre_index', methods: ['GET'])]
     public function index(ChambreRepository $chambreRepository): Response
     {
-        $chambreDisponible = $chambreRepository->findChambresNonReservees();
+        // $chambreDisponible = $chambreRepository->findChambresNonReservees();
+        $chambreDisponible = $chambreRepository->findChambresDisponibles();
 
         return $this->render('front/chambre/index.html.twig', [
             'chambres' => $chambreDisponible
@@ -76,6 +77,8 @@ class ChambreController extends AbstractController
             $days = $checking->diff($reservation->getCheckoutAt())->days;
             $prixTotal = ($chambre->getPrixJournalier() * $days) + $chambre->getPrixJournalier();
             $reservation->setPrixTotal($prixTotal);
+            
+            $reservation->getChambre($chambre)->setIsDisponible(false);
 
             //! actualiser en base de données
             $em->persist($reservation);
@@ -127,7 +130,7 @@ class ChambreController extends AbstractController
     #[Route('/payment/success', name: 'payment_success')]
     public function stripeSuccess() :Response
     {
-        $this->addFlash('success', 'Merci pour votre reservation! Vous avez reçu un email de confirmation.');
+        $this->addFlash('success', 'Merci pour votre reservation! Vous allez recevoir un email de confirmation.');
         return $this->redirectToRoute('chambre_index');
     }
 
