@@ -8,10 +8,12 @@ use App\Form\CommentType;
 use App\Form\ContactType;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 class PageController extends AbstractController
 {
@@ -22,7 +24,7 @@ class PageController extends AbstractController
     }
 
     #[Route('/contact', name: 'page_contact')]
-    public function contact(Request $request, EntityManagerInterface $em): Response
+    public function contact(Request $request, EntityManagerInterface $em, MailerInterface $mailer): Response
     {
 
         $contact = new Contact;
@@ -37,6 +39,18 @@ class PageController extends AbstractController
 
             $em->persist($contact);
             $em->flush();
+
+             //? envoyer un email de contact
+             $email = (new TemplatedEmail())
+             ->from($contact->getEmail())
+             ->to('sunandfun.chambre@gmail.com')
+             ->subject('Email de contact')
+             ->htmlTemplate('email/contact_message.html.twig')
+             ->context([
+                 'contact' => $contact
+             ]);
+             $mailer->send($email);
+             //? Fin de l'envoie
 
             $this->addFlash("success", "Merci! Votre message est pris en compte.");
 

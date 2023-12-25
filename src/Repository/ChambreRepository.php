@@ -35,26 +35,29 @@ public function findChambresNonReservees()
 }
 
 
-
-public function findChambreDisponible()
-{
- $queryBuilder = $this->createQueryBuilder('c');
-
- // Sélectionnez les chambres qui n'ont pas de réservations
- $queryBuilder->leftJoin('c.reservations', 'r');
- $queryBuilder->where($queryBuilder->expr()->isNull('r.id'));
-
- return $queryBuilder->getQuery()->getResult();
-}
-
 public function findChambresDisponibles()
 {
     return $this->createQueryBuilder('c')
         ->andWhere('c.isDisponible = :isDisponible')
         ->setParameter('isDisponible', true)
+        ->orderBy('c.titre', 'ASC')
         ->getQuery()
         ->getResult();
 }
+
+
+
+// public function findChambreDisponible()
+// {
+//  $queryBuilder = $this->createQueryBuilder('c');
+
+//  // Sélectionnez les chambres qui n'ont pas de réservations
+//  $queryBuilder->leftJoin('c.reservations', 'r');
+//  $queryBuilder->where($queryBuilder->expr()->isNull('r.id'));
+
+//  return $queryBuilder->getQuery()->getResult();
+// }
+
 
 
 //    public function findOneBySomeField($value): ?Chambre
