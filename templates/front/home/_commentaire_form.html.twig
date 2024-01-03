@@ -1,12 +1,14 @@
-<section class="mt-4">
-	<p class="d-inline-flex gap-1">
-		<button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-			Laisser un commentaire
-		</button>
-	</p>
-	<div class="collapse" id="collapseExample">
-		<div class="col-6">
-			{{ form(form) }}
-		</div>
-	</div>
-</section>
+{% if app.user %}
+	<section class="mt-4">
+		<p class="d-inline-flex gap-1">
+			<button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+				Laisser un commentaire
+			</button>
+		</p>
+		<div class="collapse" id="collapseExample">
+			<div class="col-6">
+				{{ form(form) }}
+				</div>
+			</div>
+		</section>
+{% endif %}
