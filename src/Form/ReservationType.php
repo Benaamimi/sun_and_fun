@@ -48,16 +48,22 @@ class ReservationType extends AbstractType
                 'required' => false
             ])
             ->add('nom', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'required' => false
+
             ])
             ->add('personneNumber', NumberType::class,[
-                'label' => 'Nombre de personne (Moins de 3 personne par chambre)'
+                'label' => 'Nombre de personne (Moins de 3 personne par chambre)',
+                'required' => false
             ])
             ->add('phone', NumberType::class, [
                 'label' => 'Numero de téléphone',
+                'required' => false
+
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
+                'required' => false
             ])
         ;
     }

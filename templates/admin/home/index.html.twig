@@ -16,12 +16,12 @@
 					<h5><i class="fa fa-ticket me-2"></i>Gestion des réservations</a></h5>
 			</div>
 
-			{% if is_granted("ROLE_ADMIN")  %}
+			{# {% if is_granted("ROLE_ADMIN")  %} #}
 				<div class="mt-4">
 					<a href="{{ path('admin_user_index') }}" class="text-decoration-none" class="text-decoration-none">
 						<h5><i class="fa fa-user me-2"></i>Gestion des utilisateurs</a></h5>
 				</div>
-			{% endif %}
+			{# {% endif %} #}
 
 			<div class="mt-4">
 				<a href="{{ path('admin_chambre_index') }}" class="text-decoration-none">

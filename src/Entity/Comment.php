@@ -6,6 +6,8 @@ use App\Repository\CommentRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -19,6 +21,7 @@ class Comment
     private ?string $nomComplet = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank( message: "Veuillez laissez votre avis !" )]
     private ?string $contenu = null;
 
     #[ORM\Column]

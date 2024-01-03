@@ -22,18 +22,6 @@ class ChambreRepository extends ServiceEntityRepository
     }
 
 
-public function findChambresNonReservees()
-{
-    return $this->createQueryBuilder('c')
-        ->leftJoin('c.reservations', 'r')
-        ->where('r.id IS NULL')
-        ->andWhere('c.isDisponible = :isDisponible')
-        ->setParameter('isDisponible', true)
-        ->orderBy('c.titre', 'ASC')
-        ->getQuery()
-        ->getResult();
-}
-
 
 public function findChambresDisponibles()
 {
@@ -45,6 +33,17 @@ public function findChambresDisponibles()
         ->getResult();
 }
 
+public function findChambresNonReservees()
+{
+    return $this->createQueryBuilder('c')
+        ->leftJoin('c.reservations', 'r')
+        ->where('r.id IS NULL')
+        ->andWhere('c.isDisponible = :isDisponible')
+        ->setParameter('isDisponible', true)
+        ->orderBy('c.titre', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 
 
 // public function findChambreDisponible()

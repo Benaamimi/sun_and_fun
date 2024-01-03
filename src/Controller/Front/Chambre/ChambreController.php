@@ -30,7 +30,6 @@ class ChambreController extends AbstractController
     #[Route('/chambre', name: 'chambre_index', methods: ['GET'])]
     public function index(ChambreRepository $chambreRepository): Response
     {
-        // $chambreDisponible = $chambreRepository->findChambresNonReservees();
         $chambreDisponible = $chambreRepository->findChambresDisponibles();
 
         return $this->render('front/chambre/index.html.twig', [
@@ -59,10 +58,9 @@ class ChambreController extends AbstractController
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => false]);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
            
-            //! Reservation de chambre avec injection de dependance
+            //! Reservation de chambre
             $checking = $reservation->getCheckingAt();
             $reservation->setChambre($chambre); 
             if ($checking->diff($reservation->getCheckoutAt())->invert == 1) {
