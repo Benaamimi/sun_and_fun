@@ -28,11 +28,11 @@ class Reservation
     private ?int $prixTotal = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    #[Assert\NotBlank( message: "Le prénom est obligatoire" )]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    #[Assert\NotBlank( message: "Le nom est obligatoire" )]
     private ?string $nom = null;
 
     #[ORM\Column]
@@ -42,7 +42,7 @@ class Reservation
     private ?int $personneNumber = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    #[Assert\NotBlank( message: "Un numéro de téléphone est obligatoire" )]
     #[Assert\Length(
         min: 10,
         minMessage: "Le numéro de téléphone doit contenir plus que {{ limit }} chiffres" 
@@ -50,7 +50,7 @@ class Reservation
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank( message: "Ce champ est obligatoire" )]
+    #[Assert\NotBlank( message: "veuillez entrer une adresse email valide" )]
     private ?string $email = null;
 
     #[ORM\Column]

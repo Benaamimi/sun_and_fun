@@ -11,7 +11,7 @@
 			<p class="text-light wf-bolder">Chambre d'hôtes</p>
 			{% if app.user %}
 				<h3 class="text-light fst-italic">"Hello
-					{{ app.user.prenom }}
+					{{ app.user.prenom }} {{ app.user.nom }}
 					!"</h3>
 			{% else %}
 				<a href="{{ path('chambre_index')}}" class="btn btn-outline-light rounded-pill">Découvrez nos chambres</a>
