@@ -9,12 +9,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('roles', ChoiceType::class, [
+            'choices' => [
+                'Admin' => 'ROLE_ADMIN',
+            ],
+            'expanded' => true,
+            'multiple' => true,
+        ])
         ->add('civilite', ChoiceType::class, [
             'label' => 'Civilité',
             'choices'  => [
@@ -35,14 +43,6 @@ class UserEditType extends AbstractType
                 'placeholder' => 'Tapez votre nom'
             ],
             'required' => false,
-        ])
-        ->add('roles', ChoiceType::class, [
-            'choices' => [
-                'Admin' => 'ROLE_ADMIN',
-                'Membre' => 'ROLE_USER'
-            ],
-            'expanded' => true,
-            'multiple' => true,
         ])
         ->add('email', EmailType::class, [
             'label' => 'Adresse email',

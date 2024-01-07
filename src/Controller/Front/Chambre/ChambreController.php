@@ -56,6 +56,8 @@ class ChambreController extends AbstractController
         }
         
         $form = $this->createForm(ReservationType::class, $reservation, ['chambre' => false]);
+
+        //! inspercte la requette si le formulaire a été soumis il prend les infos mis dans le formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
